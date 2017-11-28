@@ -1,11 +1,11 @@
-import 'dart:mason' as mason;
+import 'dart:leon' as leon;
 import 'dart:materials' as materials;
 import 'dart:async';
 import 'asset_bundle.dart';
 
-/// Returns a list of [mason.Renderable]'s from a glTF scene.
-Future<List<mason.Renderable>> renderStaticScene(Scene scene) async {
-  List<mason.Renderable> renderables = [];
+/// Returns a list of [leon.Renderable]'s from a glTF scene.
+Future<List<leon.Renderable>> renderStaticScene(Scene scene) async {
+  List<leon.Renderable> renderables = [];
 
   // All materials must be created using a [MaterialBuilder]
   var materialBuilder = new materials.MaterialBuilder();
@@ -13,7 +13,7 @@ Future<List<mason.Renderable>> renderStaticScene(Scene scene) async {
   // Constants such as double's, Vector2, Vector3, Vector4
   // will be compiled into the shader and can not be changed at a later time.
   materialBuilder.baseColor = new materials.Vector4Param(
-      "baseColor", new mason.Vector4(0.2, 0.2, 0.2, 1.0));
+      "baseColor", new leon.Vector4(0.2, 0.2, 0.2, 1.0));
 
   //Material Parameters can be changed
   materialBuilder.metallic = new materials.ScalarParam("metallic", 0.0);
@@ -24,13 +24,13 @@ Future<List<mason.Renderable>> renderStaticScene(Scene scene) async {
   var material = await materialBuilder.compile();
 
   _renderNodes(
-      scene.children, new mason.Matrix4.identity(), renderables, material);
+      scene.children, new leon.Matrix4.identity(), renderables, material);
 
   return renderables;
 }
 
-_renderNodes(List<Node> nodes, mason.Matrix4 transform,
-    List<mason.Renderable> renderables, materials.Material material) {
+_renderNodes(List<Node> nodes, leon.Matrix4 transform,
+    List<leon.Renderable> renderables, materials.Material material) {
   for (var node in nodes) {
     var t = node.transform.matrix * transform;
     if (node.mesh != null) {
@@ -42,7 +42,7 @@ _renderNodes(List<Node> nodes, mason.Matrix4 transform,
           mi.setParam(
               "metallic", primitive.material.metallicRoughness.metallicFactor);
         }
-        renderables.add(new mason.Renderable(mi, primitive.mesh, t));
+        renderables.add(new leon.Renderable(mi, primitive.mesh, t));
       }
     }
     _renderNodes(node.children, t, renderables, material);
