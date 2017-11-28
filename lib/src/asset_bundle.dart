@@ -1,5 +1,5 @@
-import 'dart:mason' as mason;
-import 'dart:solarium_io' as io;
+import 'dart:leon' as leon;
+import 'dart:wetware_io' as io;
 import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
@@ -78,19 +78,19 @@ class AssetBundle {
       }
 
       if (materialData["emissiveFactor"] != null) {
-        material.emissiveFactor = new mason.Vector3(
+        material.emissiveFactor = new leon.Vector3(
             materialData["emissiveFactor"][0],
             materialData["emissiveFactor"][1],
             materialData["emissiveFactor"][2]);
       } else {
-        material.emissiveFactor = new mason.Vector3.zero();
+        material.emissiveFactor = new leon.Vector3.zero();
       }
       var pbrData = materialData["pbrMetallicRoughness"];
       if (pbrData != null) {
         var mr = new MetallicRoughness();
         if (pbrData["baseColorFactor"] != null) {
           mr.baseColorFactor =
-              new mason.Vector4.array(pbrData["baseColorFactor"]);
+              new leon.Vector4.array(pbrData["baseColorFactor"]);
         }
         if (pbrData["metallicFactor"] != null) {
           mr.metallicFactor = pbrData["metallicFactor"];
@@ -139,42 +139,42 @@ class AssetBundle {
           vertexCount = accessor["count"];
           String type = accessor["type"];
 
-          mason.MeshAttribute attributeEnum;
-          mason.AccessorType accessorType;
+          leon.MeshAttribute attributeEnum;
+          leon.AccessorType accessorType;
           switch (accessor["attribute"]) {
             case "POSITION":
-              attributeEnum = mason.MeshAttribute.POSITION;
+              attributeEnum = leon.MeshAttribute.POSITION;
               break;
             case "NORMAL":
-              attributeEnum = mason.MeshAttribute.NORMAL;
+              attributeEnum = leon.MeshAttribute.NORMAL;
               break;
             case "COLOR_0":
-              attributeEnum = mason.MeshAttribute.COLOR_0;
+              attributeEnum = leon.MeshAttribute.COLOR_0;
               break;
             case "TEXCOORD_0":
-              attributeEnum = mason.MeshAttribute.TEXCOORD_0;
+              attributeEnum = leon.MeshAttribute.TEXCOORD_0;
               break;
             case "TANGENT":
-              attributeEnum = mason.MeshAttribute.TANGENT;
+              attributeEnum = leon.MeshAttribute.TANGENT;
               break;
           }
 
           switch (accessor["type"]) {
             case "VEC2":
-              accessorType = mason.AccessorType.VEC2;
+              accessorType = leon.AccessorType.VEC2;
               break;
             case "VEC3":
-              accessorType = mason.AccessorType.VEC3;
+              accessorType = leon.AccessorType.VEC3;
               break;
             case "VEC4":
-              accessorType = mason.AccessorType.VEC4;
+              accessorType = leon.AccessorType.VEC4;
               break;
           }
 
-          mason.ComponentType component =
+          leon.ComponentType component =
               _getComponentType(accessor["componentType"]);
 
-          var attributeDesc = new mason.AttributeDescription(
+          var attributeDesc = new leon.AttributeDescription(
               attributeEnum, accessorType, component);
 
           attributes.add(attributeDesc);
@@ -192,7 +192,7 @@ class AssetBundle {
             accessors.last["byteLength"] -
             offset;
 
-        primitive.mesh = await mason.Mesh.create(
+        primitive.mesh = await leon.Mesh.create(
             vertexCount, indexAccessor["count"], attributes,
             indexComponentType: indexComponent);
         primitive.mesh.setIndices(indexData);
@@ -238,12 +238,12 @@ class AssetBundle {
     if (translation == null) {
       translation = [0.0, 0.0, 0.0];
     }
-    var transform = new mason.Transform(
+    var transform = new leon.Transform(
         position:
-            new mason.Vector3(translation[0], translation[1], translation[2]),
-        rotation: new mason.Quaternion(
+            new leon.Vector3(translation[0], translation[1], translation[2]),
+        rotation: new leon.Quaternion(
             rotation[0], rotation[1], rotation[2], rotation[3]),
-        scale: new mason.Vector3(scale[0], scale[1], scale[2]));
+        scale: new leon.Vector3(scale[0], scale[1], scale[2]));
     node.transform = transform;
     var childrenIndexes = nodeData["children"];
     if (childrenIndexes != null && !childrenIndexes.isEmpty) {
@@ -268,22 +268,22 @@ class AssetBundle {
   List<Material> materials = new List<Material>();
 
   List<Mesh> meshes = new List<Mesh>();
-  List<mason.Mesh> meshInstances = new List<mason.Mesh>();
+  List<leon.Mesh> meshInstances = new List<leon.Mesh>();
 
   AssetBundle._() {}
 }
 
-mason.ComponentType _getComponentType(int componentInt) {
-  mason.ComponentType component;
+leon.ComponentType _getComponentType(int componentInt) {
+  leon.ComponentType component;
   switch (componentInt) {
     case 5126:
-      component = mason.ComponentType.FLOAT;
+      component = leon.ComponentType.FLOAT;
       break;
     case 5121:
-      component = mason.ComponentType.UNSIGNED_BYTE;
+      component = leon.ComponentType.UNSIGNED_BYTE;
       break;
     case 5123:
-      component = mason.ComponentType.UNSIGNED_SHORT;
+      component = leon.ComponentType.UNSIGNED_SHORT;
       break;
   }
   return component;
@@ -315,19 +315,19 @@ class Node {
 }
 
 class Primitive {
-  mason.Mesh mesh;
+  leon.Mesh mesh;
   Material material;
 }
 
 class Material {
   String name;
   AlphaMode alphaMode;
-  mason.Vector3 emissiveFactor;
+  leon.Vector3 emissiveFactor;
   MetallicRoughness metallicRoughness;
 }
 
 class MetallicRoughness {
-  mason.Vector4 baseColorFactor = new mason.Vector4.zero();
+  leon.Vector4 baseColorFactor = new leon.Vector4.zero();
   double metallicFactor = 0.0;
 }
 
