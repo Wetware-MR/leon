@@ -8,8 +8,8 @@ embedded_libs:
   "dart:math": "../sdk/math/math.dart"
   "dart:mirrors": "../sdk/mirrors/mirrors.dart"
   "dart:typed_data": "../sdk/typed_data/typed_data.dart"
-  "dart:mason": "../sdk/mason/mason.dart"
-  "dart:solarium_io": "../sdk/solarium_io/io.dart"
+  "dart:leon": "../sdk/leon/leon.dart"
+  "dart:wetware_io": "../sdk/wetware_io/io.dart"
   "dart:materials": "../sdk/materials/materials.dart"
   "dart:ui": "../sdk/ui/ui.dart"
   # The internal library is needed as some implementations bleed into the public
