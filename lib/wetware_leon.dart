@@ -1,7 +1,7 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library solarium_mason;
+library wetware_leon;
 
 
 export 'src/asset_bundle.dart';
